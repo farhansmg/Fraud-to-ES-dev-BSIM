@@ -19,14 +19,16 @@ import com.sun.corba.se.impl.orbutil.threadpool.TimeoutException;
 
 
 public class FrontendRespond { 
-		public static void produce(String respond) {
-			runProducer(respond); 
+		public static void produce(JsonObject res) {
+			runProducer(res); 
 		}
 
-		static void runProducer(String respond) { 
-			Producer<Long, String> producer = ProducerCreator.createProducer(); 	
-			System.out.println(respond);
-			ProducerRecord<Long, String> record = new ProducerRecord<Long, String>(KafkaIProducer.TOPIC_NAME, respond); 
+		static void runProducer(JsonObject res) { 
+			Producer<Long, String> producer = ProducerCreator.createProducerFe();
+			String respond = res.toString();
+//			System.out.println(respond);
+			ProducerRecord<Long, String> record = new ProducerRecord<Long, String>(KafkaIProducer.TOPIC_FE, respond);
+			System.out.println("Success");
 			try { 
 				RecordMetadata metadata = producer.send(record).get();
 				System.out.println("Record sent with partition " + metadata.partition() + " with offset " + metadata.offset());

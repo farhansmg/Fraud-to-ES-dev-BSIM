@@ -32,7 +32,7 @@ public class KafkaProcessor {
 		Duration sec = Duration.ofNanos(1000);
 		consumer = ConsumerCreator.createConsumer();
 		while (true) {
-			ConsumerRecords<Long, String> consumerRecords = consumer.poll(10000);
+			ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofMillis(1000));
 			for (final ConsumerRecord<Long, String> record : consumerRecords) {
 				executor.submit(new KafkaRecordHandler(record));
 			}

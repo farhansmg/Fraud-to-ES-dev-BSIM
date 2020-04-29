@@ -5,9 +5,10 @@ import javax.persistence.Persistence;
 import org.wso2.msf4j.MicroservicesRunner;
 
 import java.util.Hashtable;
+
+import com.app.kafka.respond.BoRespond;
 import com.app.kafka.streams.KafkaProcessor;
 import com.app.utils.Config;
-import com.app.kafka.respond.FrontendRespond;
 
 public class KafkaMain {
 	// For using config properties, set the properties inside app.properties
@@ -23,7 +24,7 @@ public class KafkaMain {
 		
 		// For using End point, uncomment code below
 //		MicroservicesRunner runner = new MicroservicesRunner();
-//		runner.deploy(new TangkasRespond());
+//		runner.deploy(new BoRespond());
 //    	runner.start();
 		
     	KafkaProcessor processor = new KafkaProcessor();

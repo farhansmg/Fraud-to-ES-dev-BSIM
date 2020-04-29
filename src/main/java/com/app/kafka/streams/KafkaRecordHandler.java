@@ -1,7 +1,14 @@
 package com.app.kafka.streams;
 
+import java.util.concurrent.ExecutionException;
+
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
+
 import com.app.kafka.requests.FrontendRequest;
+import com.app.kafka.respond.BoRespond;
 import com.app.kafka.respond.FrontendRespond;
 import com.app.main.KafkaMain;
 import com.google.gson.Gson;
@@ -19,30 +26,23 @@ public class KafkaRecordHandler implements Runnable {
 
 	@Override
 	public void run() { // this is where further processing happens
+		System.out.println("received... :"+record.value());
+		JsonElement jelement = new JsonParser().parse(record.value());
+		Thread mythread = Thread.currentThread();
 		
-		try
-		{
-			System.out.println("Terima di kafka consumer :"+record.value());
-			JsonElement jelement = new JsonParser().parse(record.value());
-			JsonObject message = new JsonObject();
-		    try {
-					message = jelement.getAsJsonObject();
-					System.out.println("Kirim ke esb :"+message);
-					FrontendRequest.Post_JSON(message);
-		    }
-		    catch(Exception e)
-		        {
-		            //TangkasRespond.respondToFe = "error";
-		           	System.out.println(e);
-		    }
-		}
-		catch (Exception e)
-		{
-			//TangkasRespond.respondToFe = "error";
-			e.printStackTrace();
-		}
-			
-
+		JsonObject message = new JsonObject();
+		synchronized(mythread) {
+	        System.out.println("threadId1 = "+mythread.getId());
+       		try { 
+       			message = jelement.getAsJsonObject();
+				System.out.println("Kirim ke esb :"+message);
+				FrontendRequest.Post_JSON(message);
+       		} 
+       		catch (Exception e) { 
+       			System.out.println("Error in sending record");
+       			System.out.println(e); 
+       		}
+	    }
 	}
 
 }
