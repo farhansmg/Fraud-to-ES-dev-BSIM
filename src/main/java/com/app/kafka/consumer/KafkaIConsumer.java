@@ -1,7 +1,10 @@
 package com.app.kafka.consumer;
 
 public interface KafkaIConsumer { 
-	public static String KAFKA_BROKERS = "10.7.1.23:9092,10.7.1.27:9092,10.7.1.28:9092"; 
+//	Staging
+//	public static String KAFKA_BROKERS = "10.7.1.23:9092,10.7.1.27:9092,10.7.1.28:9092"; 
+//	Production
+	public static String KAFKA_BROKERS = "10.7.1.180:9092,10.7.1.181:9092,10.7.1.182:9092"; 
 	public static Integer MESSAGE_COUNT=1000; 
 	public static String CLIENT_ID="client1"; 
 	public static String TOPIC_NAME="KafkaEsb";

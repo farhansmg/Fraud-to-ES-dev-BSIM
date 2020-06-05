@@ -22,7 +22,6 @@ import com.google.gson.JsonObject;
 import com.sun.corba.se.impl.orbutil.threadpool.TimeoutException;
 
 
-@Path("/fe")
 public class BoRespond { 
 	public static void produce(JsonObject res) {
 		runProducer(res); 

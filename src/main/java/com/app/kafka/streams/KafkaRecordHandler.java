@@ -26,7 +26,8 @@ public class KafkaRecordHandler implements Runnable {
 
 	@Override
 	public void run() { // this is where further processing happens
-		System.out.println("received... :"+record.value());
+//		System.out.println("received... :"+record.value());
+		System.out.println("received message ...");
 		JsonElement jelement = new JsonParser().parse(record.value());
 		Thread mythread = Thread.currentThread();
 		
@@ -35,7 +36,8 @@ public class KafkaRecordHandler implements Runnable {
 	        System.out.println("threadId1 = "+mythread.getId());
        		try { 
        			message = jelement.getAsJsonObject();
-				System.out.println("Kirim ke esb :"+message);
+       			System.out.println("Sending to esb ...");
+//				System.out.println("Kirim ke esb :"+message);
 				FrontendRequest.Post_JSON(message);
        		} 
        		catch (Exception e) { 

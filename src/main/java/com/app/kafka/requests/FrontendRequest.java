@@ -22,13 +22,25 @@ import com.app.kafka.streams.KafkaRecordHandler;
 public class FrontendRequest{	
 	
 	public static void Post_JSON(JsonObject dataJson) {
-           String query_url = "http://101.100.201.21:80/api/v2";
+		// staging
+//           String query_url = "http://101.100.201.21:80/api/v2";
+        // production v1
+//           String query_url = "http://101.100.201.52:8280/api/games";
+		// production v2
+		   String query_url = "http://101.100.201.65:80/api/v2";
            String result = "";
+        // -------------COMMENT IT FOR V2 ESB----------------
+//           JsonObject data = dataJson.get("data").getAsJsonObject();
+//           dataJson.remove("ip");
+        // -------------USE IT FOR V1 ESB----------------
 //           JsonObject data = dataJson.get("data").getAsJsonObject();
 //           dataJson.remove("ip");
            try 
            {
+        	// -------------COMMENT IT FOR V2 ESB----------------
 //        	   	dataJson.remove("data");
+        	// -------------USE IT FOR V1 ESB----------------
+//        	    dataJson.remove("data");
            		System.out.println("ThreadId2 :"+Thread.currentThread().getId());
            		URL url = new URL(query_url);
            		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -41,21 +53,32 @@ public class FrontendRequest{
 	     	   
 	     	   	conn.setRequestMethod("POST");
 	     	   	OutputStream os = conn.getOutputStream();
+	     	// -------------USE IT FOR V2 ESB----------------
 	     	   	os.write(dataJson.toString().getBytes("UTF-8"));
+	     	// -------------USE IT FOR V1 ESB----------------
+//	     	    os.write(data.toString().getBytes("UTF-8"));
 	     	   	os.close(); 
 	        
 	     	   	// read the response
 	     	   	InputStream in = new BufferedInputStream(conn.getInputStream());
 	     	   	
 	     	   	result = IOUtils.toString(in, "UTF-8");
+	     	   	
+	     	   	// -------------USE IT FOR V2 ESB----------------
 	     	   	JsonObject resJson = new JsonParser().parse(result).getAsJsonObject();
-	     	   	System.out.println(resJson);
+//	     	   	System.out.println(resJson);
 //	     	   	JsonObject jobject = new JsonParser().parse(result).getAsJsonObject();
 //	     	   	dataJson.addProperty("ec", jobject.get("ec").getAsInt());
 //	     	   	jobject.remove("ec");
 //	     	   	dataJson.add("data", jobject);
 //	     	   	FrontendRespond.produce(dataJson);
-	     	   	String code = resJson.get("code").getAsString();
+	     	   	
+	     	   	// -------------USE IT FOR V1 ESB----------------
+//	     	    JsonObject jobject = new JsonParser().parse(result).getAsJsonObject();
+//	     	   	dataJson.addProperty("ec", jobject.get("ec").getAsInt());
+//	     	   	jobject.remove("ec");
+//	     	   	dataJson.add("data", jobject);
+	     	   	String code = dataJson.get("code").getAsString();
 	     	   	switch(code) {
 	     	   		case "Fe":
 	     	   			FrontendRespond.produce(resJson);
@@ -72,7 +95,7 @@ public class FrontendRequest{
            catch (Exception e) {
         	   dataJson.addProperty("ec", -1);
         	   JsonObject desc = new JsonObject();
-        	   desc.addProperty("desc", "error on bridge " + e.toString());
+        	   desc.addProperty("desc", e.toString());
         	   dataJson.add("data", desc);
         	   String code = dataJson.get("code").getAsString();
         	   switch(code) {
