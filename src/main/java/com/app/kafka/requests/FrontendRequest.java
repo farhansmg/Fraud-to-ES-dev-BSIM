@@ -24,10 +24,12 @@ public class FrontendRequest{
 	public static void Post_JSON(JsonObject dataJson) {
 		// staging
 //           String query_url = "http://101.100.201.21:80/api/v2";
+		   String query_url = "http://101.100.201.21:8280/api/v2";
         // production v1
 //           String query_url = "http://101.100.201.52:8280/api/games";
 		// production v2
-		   String query_url = "http://101.100.201.65:80/api/v2";
+//		   String query_url = "http://101.100.201.65:80/api/v2";
+//		   String query_url = "http://101.100.201.65:8280/api/v2";
            String result = "";
         // -------------COMMENT IT FOR V2 ESB----------------
 //           JsonObject data = dataJson.get("data").getAsJsonObject();
