@@ -13,7 +13,7 @@ public class ProducerCreator {
 	public static Producer<Long, String> createProducerFe() { 
 		Properties props = new Properties();
 		props.put(ProducerConfig.ACKS_CONFIG, KafkaIProducer.ACKS);
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaIProducer.KAFKA_BROKERS); 
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaIProducer.KAFKA_FE_BROKERS); 
 		props.put(ProducerConfig.CLIENT_ID_CONFIG, KafkaIProducer.CLIENT_FE);
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -23,7 +23,7 @@ public class ProducerCreator {
 	public static Producer<Long, String> createProducerBo() { 
 		Properties props = new Properties();
 		props.put(ProducerConfig.ACKS_CONFIG, KafkaIProducer.ACKS);
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaIProducer.KAFKA_BROKERS); 
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaIProducer.KAFKA_BO_BROKERS); 
 		props.put(ProducerConfig.CLIENT_ID_CONFIG, KafkaIProducer.CLIENT_BO);
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
