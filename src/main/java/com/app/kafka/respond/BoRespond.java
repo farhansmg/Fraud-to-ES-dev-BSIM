@@ -28,7 +28,7 @@ public class BoRespond {
 	}
 
 	static void runProducer(JsonObject res) { 
-		Producer<Long, String> producer = ProducerCreator.createProducerFe();
+		Producer<Long, String> producer = ProducerCreator.createProducerBo();
 		String respond = res.toString();
 //		System.out.println(respond);
 		ProducerRecord<Long, String> record = new ProducerRecord<Long, String>(KafkaIProducer.TOPIC_BO, respond); 
