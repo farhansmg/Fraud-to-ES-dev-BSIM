@@ -30,6 +30,7 @@ public class KafkaProcessorBo implements Runnable {
 	private ExecutorService executor;
 	private Consumer<Long, String> consumer;
 	private Producer<Long, String> producer;
+	static Logger LOGGER = Logger.getLogger(KafkaProcessorBo.class.getName());
 	
 	public KafkaProcessorBo() {
 		consumer = ConsumerCreator.createBoConsumer();
@@ -38,13 +39,11 @@ public class KafkaProcessorBo implements Runnable {
 	
 	@Override
 	public void run() {
-		Logger logger = Logger.getLogger("org.apache.kafka");
-		logger.setLevel(Level.WARN);
 		Integer numberOfThreads = 5;
 //		consumer = ConsumerCreator.createBoConsumer();
 		executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 0L, TimeUnit.MILLISECONDS,
 				new ArrayBlockingQueue<Runnable>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
-		System.out.println("Consumer Bo running ...");
+		LOGGER.info("Consumer BO running ...");
 		while (true) {
 			ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofMillis(1000));
 			for (final ConsumerRecord<Long, String> record : consumerRecords) {

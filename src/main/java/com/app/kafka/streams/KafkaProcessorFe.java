@@ -24,12 +24,14 @@ import org.apache.log4j.Logger;
 import com.app.kafka.consumer.ConsumerCreator;
 import com.app.kafka.consumer.KafkaIConsumer;
 import com.app.kafka.respond.ProducerCreator;
+import com.app.main.KafkaMain;
 import com.app.utils.Config;
 
 public class KafkaProcessorFe implements Runnable{
 	private Consumer<Long, String> consumer;
 	private ExecutorService executor;
 	private Producer<Long, String> producer;
+	static Logger LOGGER = Logger.getLogger(KafkaProcessorFe.class.getName());
 	
 	public KafkaProcessorFe() {
 		consumer = ConsumerCreator.createFeConsumer();
@@ -38,14 +40,12 @@ public class KafkaProcessorFe implements Runnable{
 //	KafkaRecordHandler recordHandler;
 	@Override
 	public void run() {
-		Logger logger = Logger.getLogger("org.apache.kafka");
-		logger.setLevel(Level.WARN);
 		Integer numberOfThreads = 5;
 //		consumer = ConsumerCreator.createFeConsumer();
 		executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 0L, TimeUnit.MILLISECONDS,
 				new ArrayBlockingQueue<Runnable>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
 		Duration sec = Duration.ofNanos(1000);
-		System.out.println("Consumer FE running ...");
+		LOGGER.info("Consumer FE running ...");
 		while (true) {
 			ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofMillis(1000));
 			for (final ConsumerRecord<Long, String> record : consumerRecords) {
