@@ -42,6 +42,7 @@ public class KafkaMain {
 //		MicroservicesRunner runner = new MicroservicesRunner();
 //		runner.deploy(new BoRespond());
 //    	runner.start();
+//		int threads = Runtime.getRuntime().availableProcessors();
 		ExecutorService processorFe = Executors.newFixedThreadPool(5);
 		ExecutorService processorBo = Executors.newFixedThreadPool(5);
 //    	KafkaProcessorFe processor1 = new KafkaProcessorFe();

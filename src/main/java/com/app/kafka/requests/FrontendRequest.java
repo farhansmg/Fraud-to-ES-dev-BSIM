@@ -25,12 +25,12 @@ public class FrontendRequest{
 	public static JsonObject Post_JSON(JsonObject dataJson) {
 		// staging
 		//Ip public staging : http://101.100.201.21:8280/api/v2
-//		   String query_url = "http://10.7.1.50:8280/api/v2";
+		   String query_url = "http://10.7.1.50:8280/api/v2";
         // production v1
 //           String query_url = "http://101.100.201.52:8280/api/games";
 		// production v2
 //		   String query_url = "http://101.100.201.65:8280/api/v2";
-		   String query_url = "http://10.7.1.195:8280/api/v2";
+//		   String query_url = "http://10.7.1.195:8280/api/v2";
            String result = "";
            JsonObject data_esb = new JsonObject();
            JsonObject dataTemp = new JsonObject();
